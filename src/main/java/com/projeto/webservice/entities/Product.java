@@ -3,7 +3,9 @@ package com.projeto.webservice.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
@@ -18,6 +20,10 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
 
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     public Product() {
