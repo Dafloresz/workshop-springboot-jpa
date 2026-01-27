@@ -25,18 +25,13 @@ public class Payment implements Serializable {
     public Payment(){
     }
 
-    public Payment(Long id, Instant moment, Order order) {
-        this.id = id;
+    public Payment(Instant moment, Order order) {
         this.moment = moment;
         this.order = order;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Order getOrder() {
@@ -57,9 +52,10 @@ public class Payment implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Payment payment = (Payment) o;
-        return Objects.equals(id, payment.id);
+        if (this == o) return true;
+        if (!(o instanceof Payment)) return false;
+        Payment other = (Payment) o;
+        return id != null && id.equals(other.id);
     }
 
     @Override
