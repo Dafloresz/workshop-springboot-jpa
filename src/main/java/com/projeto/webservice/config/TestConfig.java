@@ -70,8 +70,9 @@ public class TestConfig implements CommandLineRunner {
         OrderItem item2 = new OrderItem(o1, p3, 1, p3.getPrice());
         OrderItem item3 = new OrderItem(o2, p3, 2, p3.getPrice());
         OrderItem item4 = new OrderItem(o3, p5, 2, p5.getPrice());
+        OrderItem item5 = new OrderItem(o4, p1, 5, p1.getPrice());
 
-        orderItemRepository.saveAll(Arrays.asList(item1, item2, item3, item4));
+        orderItemRepository.saveAll(Arrays.asList(item1, item2, item3, item4,item5));
 
         Payment payment1 = new Payment(Instant.parse("2019-06-20T20:53:07Z"), o1);
         o1.setPayment(payment1);
@@ -80,5 +81,6 @@ public class TestConfig implements CommandLineRunner {
         o4.setPayment(payment2);
 
         orderRepository.saveAll(Arrays.asList(o1, o4));
+
     }
 }
