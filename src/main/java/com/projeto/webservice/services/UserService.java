@@ -2,6 +2,7 @@ package com.projeto.webservice.services;
 
 import com.projeto.webservice.entities.User;
 import com.projeto.webservice.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +31,18 @@ public class UserService {
     public void delete(Long id){
         repository.deleteById(id);
     }
+
+    @Transactional
+    public User update(Long id, User user){
+        User entity = repository.getReferenceById(id);
+        updateData(entity, user);
+        return entity;
+    }
+
+    private void updateData(User entity, User data){
+        entity.setName(data.getName());
+        entity.setEmail(data.getEmail());
+        entity.setPhone(data.getPhone());
+    }
+
 }
