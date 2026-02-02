@@ -2,9 +2,12 @@ package com.projeto.webservice.services;
 
 import com.projeto.webservice.entities.User;
 import com.projeto.webservice.repositories.UserRepository;
+import com.projeto.webservice.services.exceptions.DatabaseException;
 import com.projeto.webservice.services.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,9 +32,17 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void delete(Long id){
-        repository.deleteById(id);
+    public void delete(Long id) {
+        try{
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
+
 
     @Transactional
     public User update(Long id, User user){
